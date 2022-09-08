@@ -1,0 +1,6 @@
+<h2>History</h2>
+<ul class="history" *ngIf="b || !b">
+    <li *ngFor="let link of history.hist">
+        <button class="button" (click)="launch(link)">{{link}}</button>
+    </li>
+</ul>

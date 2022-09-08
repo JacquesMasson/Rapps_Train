@@ -1,0 +1,14 @@
+<h2>Bookmarks</h2>
+<button type="button" class="show-bookmark" (click)="displayBM()">
+    <ng-container *ngIf="!isShowing">
+        <ng-container *ngIf="bookmark.book.length === 1">Show the 0 Bookmarks</ng-container>
+        <ng-container *ngIf="bookmark.book.length> 1">Show the {{bookmark.book.length-1}} Bookmarks</ng-container>
+    </ng-container>
+    <ng-container *ngIf="isShowing">Hide Bookmarks</ng-container>
+</button>
+<button type="button" class="add-to-bookmark" (click)="addBM()">Add to bookmark</button>
+<ul class="Bookmarks" *ngIf="isShowing">
+    <li *ngFor="let link of bookmark.book">
+        <button class="button" (click)="launch(link)">{{link}}</button>
+    </li>
+</ul>
