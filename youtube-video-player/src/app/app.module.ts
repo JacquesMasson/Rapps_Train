@@ -10,6 +10,7 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import { VideoViewComponent } from './video-view/video-view.component';
 import { HistoryComponent } from './history/history.component';
 import { BookmarksComponent } from './bookmarks/bookmarks.component';
+import { CallbackPipe } from './callback.pipe';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { BookmarksComponent } from './bookmarks/bookmarks.component';
     VideoViewComponent,
     HistoryComponent,
     BookmarksComponent,
+    CallbackPipe,
   ],
   imports: [
     BrowserModule,

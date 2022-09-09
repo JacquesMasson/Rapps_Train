@@ -11,7 +11,7 @@ import { ApiService } from '../api.service';
 })
 export class HistoryComponent implements OnInit {
 
-  history!: Res;
+  history!: Res["hist"];
   link: string = "";
   subscription : Subscription | undefined;
   b = true;
@@ -34,11 +34,15 @@ export class HistoryComponent implements OnInit {
   }
 
   getHistory(): void {
-    this.api.getList().subscribe(data => this.history = {hist: data.hist, book:data.book});
+    this.api.getHistory().subscribe(data => this.history = data.hist);
     this.b = !this.b;
   }
 
   launch(link: string){
       this.video.changeLink(link);
+  }
+
+  goodLink(link: any): any{
+    return link.length > 1;
   }
 }

@@ -13,7 +13,7 @@ export class SearchBarComponent implements OnInit {
 
   link :string = "";
   subscription : Subscription | undefined;
-  history!: HistoryComponent;//TODO: En général c'est pas une bonne pratique d'avoir "!" après une variable. Essaie de trouver une autre solution si tu peux
+  history: HistoryComponent | undefined;//DONE: En général c'est pas une bonne pratique d'avoir "!" après une variable. Essaie de trouver une autre solution si tu peux
 
   constructor(private video: VideoService, private api: ApiService) { }
 
@@ -27,7 +27,7 @@ export class SearchBarComponent implements OnInit {
 
   researchLink(nlink:string){
     this.video.changeLink(nlink);
-    const jsonlink= '{"content": "'+nlink+'"}';
+    const jsonlink = '{"content": "'+nlink+'"}';
     const obj = JSON.parse(jsonlink);
     this.api.postLink(obj).subscribe(() => this.api.onResearchButtonClick());
     this.api.sendLink(nlink);

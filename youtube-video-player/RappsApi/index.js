@@ -1,10 +1,9 @@
 const fs = require("fs/promises");
 const express = require("express");
 const cors = require("cors");
-const _ = require("lodash");
-const {v4: uuid} = require("uuid");
-const {readFileSync, promises: fsPromises, read} = require('fs');
-//TODO: Toujours enlever les imports inutilisés!
+require("lodash");
+const {readFileSync} = require('fs');
+//DONE: Toujours enlever les imports inutilisés!
 
 const app = express();
 
@@ -24,7 +23,7 @@ function readFile(filename){
 function writeFile(filename, content){
     try{
         const res= "\n"+content;
-        fs.writeFile(filename, res, {flag: 'a+'}, err=>{{}})
+        fs.writeFile(filename, res, {flag: 'a+'}, ()=>{{}})
     }catch(err){
         console.log(err);
     }
@@ -33,18 +32,23 @@ function writeFile(filename, content){
 history = [];
 bookmarks = [];
 
-//TODO: faire deux routes: une pour les bookmarks,une pour les histories
-app.get("/display", (req, res)=> {
+//DONE: faire deux routes: une pour les bookmarks,une pour les histories
+app.get("/displayHistory", (req, res)=> {
     history = readFile('./History.txt').reverse();
-    bookmarks =readFile('Bookmark.txt')
     res.json({
         hist: history,
+    });
+})
+
+app.get("/displayBookmaks", (req, res)=> {
+    bookmarks =readFile('Bookmark.txt')
+    res.json({
         book: bookmarks
     });
 })
 
-//TODO: si cette route sert à récup les histories, il faudrait quelle soit "/addHistory", il faut garder de la cohérence dans le nommage!
-app.post("/add", (req, res) => {
+//DONE: si cette route sert à récup les histories, il faudrait quelle soit "/addHistory", il faut garder de la cohérence dans le nommage!
+app.post("/addHistory", (req, res) => {
     const link = req.body.content;
     if (!link){
         return res.sendStatus(400);

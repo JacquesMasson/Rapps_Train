@@ -11,11 +11,11 @@ import { ApiService } from '../api.service';
 })
 export class BookmarksComponent implements OnInit {
 
-  // TODO: mieux differencier les bookmarks et histories. C'est pas logique qu'un objet bookmark contienne "hist" et "book"
+  // DONE: mieux differencier les bookmarks et histories. C'est pas logique qu'un objet bookmark contienne "hist" et "book"
   // Pareil pour les histories
-  bookmark! : Res;
+  bookmark! : Res["book"];
   isShowing : boolean = false;
-  currentvideo: string = ""; //TODO: respecter le camelCase
+  currentVideo: string = ""; //DONE: respecter le camelCase
   link: string = "";
   subscription : Subscription | undefined;
 
@@ -25,7 +25,7 @@ export class BookmarksComponent implements OnInit {
     this.subscription = this.video.currentVideoLink.subscribe(link => this.link = link)
     this.getBookmark();
     if(this.api.subB==undefined){
-      this.api.subB = this.api.invokeBookFunction.subscribe(link=>this.currentvideo =link)
+      this.api.subB = this.api.invokeBookFunction.subscribe(link=>this.currentVideo = link)
     }
   }
 
@@ -38,17 +38,19 @@ export class BookmarksComponent implements OnInit {
 }
 
   getBookmark(): void {
-    this.api.getList().subscribe(data => {this.bookmark = {hist: data.hist, book:data.book}; console.log(this.bookmark)});
+    this.api.getBookmarks().subscribe(data => {this.bookmark = data.book; console.log(this.bookmark)});
   }
   
   displayBM(){
     this.isShowing = !this.isShowing;
   }
   addBM(){
-    //TODO: ça changera peut-être avec le localStorage, mais pour l'instant les deux lignes suivantes ne me semblent pas utiles
-    const jsonlink= '{"content": "'+this.currentvideo+'"}';
-    const obj = JSON.parse(jsonlink);
-    // const obj = {content: this.currentvideo} devrait marcher pareil
+    //DONE: ça changera peut-être avec le localStorage, mais pour l'instant les deux lignes suivantes ne me semblent pas utiles
+    const obj = {content: this.currentVideo}
     this.api.postBookLink(obj).subscribe(()=>this.getBookmark());
+  }
+
+  goodLink(link: any): any{
+    return link.length > 1;
   }
 }

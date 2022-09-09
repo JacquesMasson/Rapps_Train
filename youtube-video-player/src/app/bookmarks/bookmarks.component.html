@@ -1,16 +1,16 @@
 <h2>Bookmarks</h2>
-<button type="button" class="show-bookmark" (click)="displayBM()">
+<button type="button" class="show-bookmark" (click)="displayBM()" [disabled]="bookmark.length === 1">
     <ng-container *ngIf="!isShowing">
-        <!-- TODO: désactiver le button si il n'y a pas de bookmark enregistré -->
-        <ng-container *ngIf="bookmark.book.length === 1">Show the 0 Bookmarks</ng-container>
-        <!-- TODO: Pas normal que tu aies une liste avec un élément vide quand il n'y a pas de bookmark, essaie de régler ça !-->
-        <ng-container *ngIf="bookmark.book.length> 1">Show the {{bookmark.book.length-1}} Bookmarks</ng-container>
+        <!-- DONE: désactiver le button si il n'y a pas de bookmark enregistré -->
+        <ng-container *ngIf="bookmark.length === 1">No Bookmarks</ng-container>
+        <!-- DONE: Pas normal que tu aies une liste avec un élément vide quand il n'y a pas de bookmark, essaie de régler ça !-->
+        <ng-container *ngIf="bookmark.length> 1">Show the {{bookmark.length-1}} Bookmarks</ng-container>
     </ng-container>
     <ng-container *ngIf="isShowing">Hide Bookmarks</ng-container>
 </button>
 <button type="button" class="add-to-bookmark" (click)="addBM()">Add to bookmark</button>
 <ul class="Bookmarks" *ngIf="isShowing">
-    <li *ngFor="let link of bookmark.book">
+    <li *ngFor="let link of bookmark | callback:goodLink">
         <button class="button" (click)="launch(link)">{{link}}</button>
     </li>
 </ul>
