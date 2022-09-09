@@ -13,7 +13,7 @@ export class SearchBarComponent implements OnInit {
 
   link :string = "";
   subscription : Subscription | undefined;
-  history!: HistoryComponent;
+  history!: HistoryComponent;//TODO: En général c'est pas une bonne pratique d'avoir "!" après une variable. Essaie de trouver une autre solution si tu peux
 
   constructor(private video: VideoService, private api: ApiService) { }
 
