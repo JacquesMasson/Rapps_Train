@@ -12,6 +12,7 @@ import { HistoryComponent } from '../history/history.component';
 export class SearchBarComponent implements OnInit {
 
   link :string = "";
+  wrongLink = true;
   subscription : Subscription | undefined;
   history: HistoryComponent | undefined;//DONE: En général c'est pas une bonne pratique d'avoir "!" après une variable. Essaie de trouver une autre solution si tu peux
 
@@ -26,12 +27,15 @@ export class SearchBarComponent implements OnInit {
   }
 
   researchLink(nlink:string){
-    this.video.changeLink(nlink);
-    const jsonlink = '{"content": "'+nlink+'"}';
-    const obj = JSON.parse(jsonlink);
-    this.api.postLink(obj).subscribe(() => this.api.onResearchButtonClick());
-    this.api.sendLink(nlink);
-
+    if (nlink.length === 43) {
+      this.wrongLink = false;
+      this.video.changeLink(nlink);
+      const jsonlink = '{"content": "' + nlink + '"}';
+      const obj = JSON.parse(jsonlink);
+      this.api.postLink(obj).subscribe(() => this.api.onResearchButtonClick());
+      this.api.sendLink(nlink);
+      this.wrongLink = true;
+    }
   }
 
 }
