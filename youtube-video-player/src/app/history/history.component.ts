@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Res } from 'response';
 import { Subscription } from 'rxjs';
 import { VideoService } from 'src/video.service';
 import { ApiService } from '../api.service';
+
+class History {
+  links : any[]= [];
+}
 
 @Component({
   selector: 'history',
@@ -11,7 +14,8 @@ import { ApiService } from '../api.service';
 })
 export class HistoryComponent implements OnInit {
 
-  history!: Res["hist"];
+  history : History = new History();
+  hist: string = "";
   link: string = "";
   subscription : Subscription | undefined;
   b = true;
@@ -20,12 +24,14 @@ export class HistoryComponent implements OnInit {
   constructor(private video: VideoService, private api: ApiService) { }
 
   ngOnInit(): void {
-    this.subscription = this.video.currentVideoLink.subscribe(link => this.link = link)
-    this.getHistory();
-    if(this.api.subH==undefined){
-      this.api.subH = this.api.invokeHistoryFunction.subscribe((_:string)=>{
-        this.getHistory();
-      })
+    if(this.getLocal() != null){
+      this.history = this.getLocal();
+    }
+      this.subscription = this.video.currentVideoLink.subscribe(link => this.link = link)
+      if(this.api.subH==undefined){
+        this.api.subH = this.api.invokeHistoryFunction.subscribe((_:string)=>{
+          this.getHistory();
+        })
     }
   }
 
@@ -33,13 +39,26 @@ export class HistoryComponent implements OnInit {
     this.subscription?.unsubscribe();
   }
 
+  setLocal(res: any): void{
+    localStorage.setItem('hist', JSON.stringify(res))
+  }
+
+  getLocal(): any{
+    return JSON.parse(localStorage.getItem('hist') as any);
+  }
+
   getHistory(): void {
-    this.api.getHistory().subscribe(data => this.history = data.hist);
+    this.api.getHistory().subscribe(
+        response =>{
+          this.setLocal(response)
+          this.history = this.getLocal();
+        })
     this.b = !this.b;
   }
 
   launch(link: string){
-      this.video.changeLink(link);
+    this.api.sendLink(link);
+    this.video.changeLink(link);
   }
 
   goodLink(link: any): any{

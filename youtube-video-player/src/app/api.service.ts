@@ -13,15 +13,15 @@ export class ApiService {
   subB!: Subscription;
   subH!: Subscription;
   constructor(private http: HttpClient) { }
-  //DONE: avoir deux routes: getBookmarks et getHistory. Dans le cas présent c'est pas super important,
+  //DONE : avoir deux routes : getBookmarks et getHistory. Dans le cas présent, ce n'est pas super important,
   //mais en général tes objets ne seront pas exactement les mêmes, et il vaut mieux séparer.
-  //Avec des exceptions si on veut opti à fond mais c'est autre chose.
+  //Avec des exceptions si on veut opti à fond, mais c'est autre chose.
   getHistory(){
-    return this.http.get<Res>('http://localhost:8000/displayHistory');
+    return this.http.get<any>('http://localhost:8000/displayHistory');
   }
 
   getBookmarks(){
-    return this.http.get<Res>('http://localhost:8000/displayBookmaks');
+    return this.http.get<any>('http://localhost:8000/displayBookmaks');
   }
 
   postLink(link: string){

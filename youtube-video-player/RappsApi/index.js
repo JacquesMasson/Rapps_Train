@@ -36,14 +36,14 @@ bookmarks = [];
 app.get("/displayHistory", (req, res)=> {
     history = readFile('./History.txt').reverse();
     res.json({
-        hist: history,
+        links: history,
     });
 })
 
 app.get("/displayBookmaks", (req, res)=> {
     bookmarks =readFile('Bookmark.txt')
     res.json({
-        book: bookmarks
+        links: bookmarks
     });
 })
 

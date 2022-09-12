@@ -31,6 +31,7 @@ export class SearchBarComponent implements OnInit {
     const obj = JSON.parse(jsonlink);
     this.api.postLink(obj).subscribe(() => this.api.onResearchButtonClick());
     this.api.sendLink(nlink);
+
   }
 
 }
