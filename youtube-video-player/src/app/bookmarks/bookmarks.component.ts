@@ -67,8 +67,10 @@ export class BookmarksComponent implements OnInit {
   }
   addBM(){
     //DONE: ça changera peut-être avec le localStorage, mais pour l'instant les deux lignes suivantes ne me semblent pas utiles
-    const obj = {content: this.currentVideo}
-    this.api.postBookLink(obj).subscribe(() => this.getBookmark());
+    if (this.bookmarks.links.indexOf(this.currentVideo) === -1) {
+      const obj = {content: this.currentVideo}
+      this.api.postBookLink(obj).subscribe(() => this.getBookmark());
+    }
   }
 
   goodLink(link: any): any{
